@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { ArrowLeft, Save, Calendar, Clock } from "lucide-react";
+import { ArrowLeft, Save } from "lucide-react";
 import notesAPI from "../../lib/api";
 import { useNotification } from "../../contexts/NotificationContext";
 import "./index.css";

@@ -26,6 +26,7 @@ function App() {
       },
     ]);
     setInput('');
+    setError('');
   };
 
   const toggleTodo = (id) => {

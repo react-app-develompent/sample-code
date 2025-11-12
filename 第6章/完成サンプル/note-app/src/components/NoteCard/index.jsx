@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Heart, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import "./index.css";
 
 function NoteCard({ note, onDelete }) {

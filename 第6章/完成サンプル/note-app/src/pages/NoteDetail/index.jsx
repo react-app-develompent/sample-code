@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { ArrowLeft, Save, Heart, Trash2, Calendar, Clock } from "lucide-react";
+import { ArrowLeft, Save, Trash2, Calendar, Clock } from "lucide-react";
 import Spinner from "../../components/Spinner/index";
 import notesAPI from "../../lib/api";
 import { useNotification } from "../../contexts/NotificationContext";

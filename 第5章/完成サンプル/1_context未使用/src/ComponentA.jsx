@@ -1,10 +1,4 @@
-import { useContext } from "react";
-import { TextContext } from "./App";
-
-function ComponentA() {
-  const { inputText } = useContext(TextContext);
-  console.log(inputText);
-
+function ComponentA({ inputText }) {
   return (
     <div>
       <p>ComponentAで表示中: {inputText}</p>

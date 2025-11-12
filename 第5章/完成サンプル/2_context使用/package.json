@@ -1,5 +1,5 @@
 {
-  "name": "state-management-sample",
+  "name": "state-management-sample-with-context",
   "private": true,
   "version": "0.0.0",
   "type": "module",
