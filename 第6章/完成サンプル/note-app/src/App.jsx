@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import Layout from "./components/Layout/index";
 import Home from "./pages/Home";
@@ -9,7 +9,7 @@ import "./App.css";
 function App() {
   return (
     <NotificationProvider>
-      <Router>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
@@ -17,7 +17,7 @@ function App() {
             <Route path="/new" element={<NewNote />} />
           </Route>
         </Routes>
-      </Router>
+      </BrowserRouter>
     </NotificationProvider>
   );
 }
