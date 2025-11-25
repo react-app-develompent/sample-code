@@ -108,7 +108,3 @@ textarea:focus {
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1), var(--shadow-glow);
   background-color: var(--color-bg-tertiary);
 }
-
-#root {
-  min-height: 100vh;
-}
