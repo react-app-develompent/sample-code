@@ -1,0 +1,135 @@
+import { useState, useEffect } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { ArrowLeft, Save, Trash2, Calendar, Clock } from "lucide-react";
+import Spinner from "../../components/Spinner/index";
+import notesAPI from "../../lib/api";
+import { useNotification } from "../../contexts/NotificationContext";
+import "./index.css";
+
+function NoteDetail() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { showNotification } = useNotification();
+  const [note, setNote] = useState(null);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    fetchNote();
+  }, []);
+
+  const fetchNote = async () => {
+    setLoading(true);
+    try {
+      const note = await notesAPI.getById(id);
+      setNote(note);
+      setTitle(note.title);
+      setContent(note.content);
+    } catch (error) {
+      console.error("メモの取得に失敗しました:", error);
+      showNotification("error", "メモの取得に失敗しました");
+      navigate("/");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateNote = async () => {
+    setSaving(true);
+    try {
+      await notesAPI.update(id, { title, content });
+      showNotification("success", "メモを保存しました！");
+      navigate("/");
+    } catch (error) {
+      console.error("メモの保存に失敗しました:", error);
+      showNotification("error", "メモの保存に失敗しました");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const deleteNote = async () => {
+    if (window.confirm("このメモを削除してもよろしいですか？")) {
+      try {
+        await notesAPI.delete(id);
+        showNotification("success", "メモを削除しました");
+        navigate("/");
+      } catch (error) {
+        console.error("メモの削除に失敗しました:", error);
+        showNotification("error", "メモの削除に失敗しました");
+      }
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="note-detail">
+        <Spinner />
+      </div>
+    );
+  }
+
+  return (
+    <div className="note-detail">
+      <div className="note-detail__header">
+        <Link to="/" className="note-detail__back-btn">
+          <ArrowLeft className="note-detail__back-icon" />
+          戻る
+        </Link>
+
+        <div className="note-detail__actions">
+          <button
+            className="note-detail__save-btn"
+            onClick={updateNote}
+            disabled={!title.trim() || !content.trim() || saving}
+          >
+            <Save className="note-detail__save-icon" />
+            {saving ? "保存中..." : "保存"}
+          </button>
+          <button
+            className="note-detail__action-btn note-detail__action-btn--danger"
+            onClick={deleteNote}
+          >
+            <Trash2 className="note-detail__action-icon" />
+          </button>
+        </div>
+      </div>
+
+      <div className="note-detail__content">
+        <div className="note-detail__meta">
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="note-detail__title-input"
+            placeholder="タイトルを入力..."
+          />
+
+          <div className="note-detail__info">
+            <div className="note-detail__info-item">
+              <Calendar className="note-detail__info-icon" />
+              作成: {note.createdAt}
+            </div>
+            <div className="note-detail__info-item">
+              <Clock className="note-detail__info-icon" />
+              更新: {note.updatedAt}
+            </div>
+          </div>
+        </div>
+
+        <div className="note-detail__body">
+          <textarea
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            className="note-detail__textarea"
+            placeholder="メモの内容を入力してください..."
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default NoteDetail;

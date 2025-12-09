@@ -1,0 +1,169 @@
+/* ===== グローバル基本設定 ===== */
+
+:root {
+  /* カラーパレット（教育的に配慮した視認性重視） */
+  --color-primary: #2563eb;        /* メインブルー */
+  --color-primary-dark: #1d4ed8;   /* ホバー時の濃いブルー */
+  --color-success: #16a34a;        /* 完了状態の緑 */
+  --color-warning: #d97706;        /* 未完了状態のオレンジ */
+  --color-danger: #dc2626;         /* 削除ボタンの赤 */
+  --color-gray-50: #f9fafb;        /* 背景色（薄いグレー） */
+  --color-gray-100: #f3f4f6;       /* セクション背景 */
+  --color-gray-200: #e5e7eb;       /* ボーダー色 */
+  --color-gray-300: #d1d5db;       /* フォームボーダー */
+  --color-gray-600: #4b5563;       /* テキスト色（中間） */
+  --color-gray-700: #374151;       /* メインテキスト */
+  --color-gray-900: #111827;       /* タイトル等（濃い） */
+  --color-white: #ffffff;          /* 純白 */
+  
+  /* フォント設定（日本語に最適化） */
+  --font-family-base: 
+    'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans CJK JP', 
+    'Yu Gothic UI', 'Meiryo UI', sans-serif;
+  --font-family-mono: 
+    'SF Mono', 'Monaco', 'Consolas', 'Liberation Mono', monospace;
+  
+  /* フォントサイズ（相対単位でレスポンシブ） */
+  --font-size-xs: 0.75rem;     /* 12px */
+  --font-size-sm: 0.875rem;    /* 14px */
+  --font-size-base: 1rem;      /* 16px */
+  --font-size-lg: 1.125rem;    /* 18px */
+  --font-size-xl: 1.25rem;     /* 20px */
+  --font-size-2xl: 1.5rem;     /* 24px */
+  --font-size-3xl: 1.875rem;   /* 30px */
+  
+  /* スペーシング（8pxベースの統一システム） */
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.25rem;  /* 20px */
+  --space-6: 1.5rem;   /* 24px */
+  --space-8: 2rem;     /* 32px */
+  --space-10: 2.5rem;  /* 40px */
+  --space-12: 3rem;    /* 48px */
+  
+  /* ボーダー半径（統一された角丸） */
+  --radius-sm: 0.25rem;  /* 4px */
+  --radius-md: 0.5rem;   /* 8px */
+  --radius-lg: 0.75rem;  /* 12px */
+  --radius-xl: 1rem;     /* 16px */
+  
+  /* シャドウ（立体感のある影） */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  
+  /* トランジション（スムーズなアニメーション） */
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 300ms ease-in-out;
+  --transition-slow: 500ms ease-in-out;
+}
+
+/* ===== リセット・正規化 ===== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  color: var(--color-gray-700);
+  background-color: var(--color-gray-50);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== アクセシビリティ：スクリーンリーダー専用 ===== */
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ===== フォーカス管理（キーボード操作の可視化） ===== */
+
+*:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ボタンのフォーカススタイル */
+button:focus,
+input:focus,
+textarea:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgb(37 99 235 / 0.1);
+}
+
+/* ===== タイポグラフィ ===== */
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--color-gray-900);
+}
+
+p {
+  margin-bottom: var(--space-4);
+}
+
+/* ===== レスポンシブデザイン基盤 ===== */
+
+@media (max-width: 640px) {
+  :root {
+    --font-size-base: 0.875rem; /* モバイルで少し小さく */
+    --space-4: 0.875rem;        /* スペースも調整 */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===== プリント時の最適化 ===== */
+
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+}
