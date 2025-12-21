@@ -15,7 +15,7 @@ function NoteDetail() {
             保存
           </button>
           <button className="note-detail__action-btn note-detail__action-btn--danger">
-            <Trash2 className="note-detail__action-icon" />{' '}
+            <Trash2 className="note-detail__action-icon" />
           </button>
         </div>
       </div>

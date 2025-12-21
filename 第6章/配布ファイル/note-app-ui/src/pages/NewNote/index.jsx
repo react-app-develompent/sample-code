@@ -12,7 +12,8 @@ function NewNote() {
 
         <div className="new-note__actions">
           <button className="new-note__save-btn">
-            <Save className="new-note__save-icon" /> 保存
+            <Save className="new-note__save-icon" />
+            保存
           </button>
         </div>
       </div>

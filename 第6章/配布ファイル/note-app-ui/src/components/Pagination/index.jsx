@@ -9,7 +9,9 @@ function Pagination() {
         前へ
       </button>
 
-      <div className="pagination__info">1 / 2</div>
+      <div className="pagination__info">
+        1 / 2
+      </div>
 
       <button className="pagination__nav">
         次へ

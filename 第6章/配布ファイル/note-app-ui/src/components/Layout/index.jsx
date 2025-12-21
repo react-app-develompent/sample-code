@@ -12,8 +12,12 @@ function Layout() {
             </Link>
           </div>
           <nav className="layout__nav">
-            <Link className="layout__nav-link">ホーム</Link>
-            <Link className="layout__nav-link">新規作成</Link>
+            <Link className="layout__nav-link">
+              ホーム
+            </Link>
+            <Link className="layout__nav-link">
+              新規作成
+            </Link>
           </nav>
         </div>
       </header>

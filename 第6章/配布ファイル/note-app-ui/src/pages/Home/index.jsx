@@ -14,7 +14,9 @@ function Home() {
             placeholder="メモを検索..."
             className="home__search-field"
           />
-          <button className="home__search-btn">検索</button>
+          <button className="home__search-btn">
+            検索
+          </button>
         </div>
       </div>
       <div className="home__notes">
