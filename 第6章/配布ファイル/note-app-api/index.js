@@ -4,7 +4,9 @@ const sqlite3 = require("sqlite3").verbose();
 const { open } = require("sqlite");
 
 const app = express();
-const PORT = 3001;
+// ポートリトライ設定
+const START_PORT = 3001; // 開始ポート
+const MAX_PORT = 3011;   // 最大ポート
 
 app.use(cors());
 app.use(express.json());
@@ -255,13 +257,55 @@ app.delete("/notes/:id", async (req, res) => {
   }
 });
 
+// 指定されたポートでサーバー起動を試みる
+function tryPort(port) {
+  return new Promise((resolve, reject) => {
+    const server = app.listen(port)
+      .on('listening', () => {
+        console.log(`サーバーが http://localhost:${port} で起動しています`);
+        resolve(server);
+      })
+      .on('error', (error) => {
+        if (error.code === 'EADDRINUSE') {
+          reject(error);
+        } else {
+          console.error(`ポート ${port} でエラーが発生しました:`, error);
+          reject(error);
+        }
+      });
+  });
+}
+
+// ポート3001から3011まで順番に試行してサーバーを起動
+async function startServer() {
+  for (let port = START_PORT; port <= MAX_PORT; port++) {
+    try {
+      console.log(`ポート ${port} で起動を試みています...`);
+      await tryPort(port);
+      return;
+    } catch (error) {
+      if (error.code === 'EADDRINUSE') {
+        console.log(`ポート ${port} は既に使用されています`);
+        if (port === MAX_PORT) {
+          console.error(`\nエラー: ポート ${START_PORT} から ${MAX_PORT} まですべて使用中です`);
+          console.error('他のアプリケーションを停止してから再度お試しください');
+          process.exit(1);
+        }
+        continue;
+      } else {
+        console.error('予期しないエラーが発生しました:', error);
+        process.exit(1);
+      }
+    }
+  }
+}
+
+// データベース初期化後にサーバー起動
 initializeDb()
   .then(() => {
-    app.listen(PORT, () => {
-      console.log(`サーバーが http://localhost:${PORT} で起動しています`);
-    });
+    startServer();
   })
   .catch((error) => {
-    console.error("サーバーの起動に失敗しました:", error);
+    console.error("データベースの初期化に失敗しました:", error);
     process.exit(1);
   });
